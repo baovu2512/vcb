@@ -87,7 +87,7 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<encoding>UTF-8</encoding>
-					<executable>C:\Program Files\Java\jdk1.8.0_231\bin\javac</executable>
+					<executable>C:\Program Files\Java\jdk1.8.0_162\bin\javac</executable>
 				</configuration>
 			</plugin>
 			<plugin>

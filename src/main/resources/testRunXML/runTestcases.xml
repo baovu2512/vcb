@@ -6,7 +6,7 @@
 		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
 		<listener class-name="reportConfig.ExtentTestListener" />
 		<listener class-name="retryTestFailed.RetryListener" />
-	</listeners>	
+	</listeners>
 	<test name="Test BML on CHROME">
 		<parameter name="browser" value="chrome" />
 		<parameter name="url" value="vcbchart" />

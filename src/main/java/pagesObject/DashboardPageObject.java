@@ -27,4 +27,9 @@ public class DashboardPageObject extends AbstractPage {
 		clickToElement(driver, DashboardPageUI.QUERY_BUTTON);
 		waitForElementInvisible(driver, DashboardPageUI.SPINNER_LOADING);
 	}
+
+	public void clickPDFMenu(){
+		waitForElementVisible(driver, DashboardPageUI.PDF_MENU);
+		clickToElement(driver, DashboardPageUI.PDF_MENU);
+	}
 }
