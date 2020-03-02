@@ -1,27 +1,32 @@
 package testCasesDashboard;
 
-import java.lang.reflect.Method;
-
-import net.bytebuddy.implementation.bind.MethodDelegationBinder;
+import commons.AbstractTest;
+import commons.PageFactoryManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
-import commons.AbstractTest;
-import commons.PageFactoryManager;
 import pagesObject.DashboardPageObject;
 import pagesObject.LoginPageObject;
+import pagesObject.PDFPageObject;
 import reportConfig.ExtentTestManager;
 
-public class Dashboard_01_D4 extends AbstractTest {
+import java.lang.reflect.Method;
+import java.rmi.activation.ActivationID;
+import java.util.List;
+
+public class PDF_SEARCH extends AbstractTest {
 	private WebDriver driver;
 	private LoginPageObject loginPage;
 	private DashboardPageObject dashboardPage;
-	public static String sUsername = "superuser";
-	public static String sPassword = "superpass";
-
+	private PDFPageObject pdfPage;
+	List<WebElement> kyBaoCao;
+	static String sUsername = "superuser";
+	static String sPassword = "superpass";
 	@Parameters({ "browser", "url" })
 	@BeforeTest
 	public void RegisterToSystem(String browserName, String url) {
@@ -46,11 +51,26 @@ public class Dashboard_01_D4 extends AbstractTest {
 	}
 
 	@Test
-	public void Verify_Dashboard(Method method) {
+	public void Test_KyBaoCao(Method method) {
 		verifyTrue(true);
 		ExtentTestManager.startTest(method.getName(),method.getName());
-		log.info("PaymentPrecondition: Step 01 - Click to PDF Menu side-bar");
+		log.info("Test_KyBaoCao: Step 01 - Click to PDF Menu side-bar");
 		dashboardPage.clickPDFMenu();
+		pdfPage = PageFactoryManager.getPdfPage(driver);
+
+		log.info("Test_KyBaoCao: Step 02 - Click to dropdownlist Ky Bao Caor");
+		kyBaoCao = pdfPage.clickToKyBaoCaoAndGetAllElement();
+
+		log.info("Test_KyBaoCao: Step 03 - Click to Ten Bao Cao and Query");
+		for (int i = 1; i <kyBaoCao.size(); i++) {
+				String sDropDownValue = kyBaoCao.get(i).getText();
+				log.info("Test_KyBaoCao: Step 04 - Click to Ten Bao Cao and Query");
+				pdfPage.selectKyBaoCao(kyBaoCao.get(i));
+				pdfPage.clickQueryButton();
+				verifyTrue(pdfPage.verifyTenBaoCao(sDropDownValue));
+				kyBaoCao = pdfPage.clickToKyBaoCaoAndGetAllElement();
+		}
+
 
 	}
 

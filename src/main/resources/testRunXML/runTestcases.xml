@@ -11,7 +11,7 @@
 		<parameter name="browser" value="chrome" />
 		<parameter name="url" value="vcbchart" />
 		<classes>
-			<class name="testCasesDashboard.Dashboard_01_D4" />
+			<class name="testCasesDashboard.PDF_SEARCH" />
 		</classes>
 	</test>
 </suite>

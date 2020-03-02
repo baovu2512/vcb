@@ -169,6 +169,10 @@ public class AbstractPage {
 		}
 	}
 
+	public List<WebElement> getAllElement(WebDriver driver, String locator){
+		return driver.findElements(By.xpath(locator));
+	}
+
 	public String getAttributeValue(WebDriver driver, String locator, String attributeName) {
 		highlightElement(driver, locator);
 		element = driver.findElement(By.xpath(locator));
@@ -354,6 +358,12 @@ public class AbstractPage {
 		action = new Actions(driver);
 		action.moveToElement(element).perform();
 	}
+	public void clickToElementByAction(WebDriver driver, WebElement element) {
+		javascriptExecutor.executeScript("arguments[0].scrollIntoViewIfNeeded(true);", element);
+		action = new Actions(driver);
+		waitForElementVisible(driver,element);
+		action.click(element).perform();
+	}
 
 	public void hoverMouseToElement(WebDriver driver, String locator, String... values) {
 		locator = String.format(locator, (Object[]) values);
@@ -413,18 +423,18 @@ public class AbstractPage {
 	}
 
 	public void highlightElement(WebDriver driver, String locator) {
-		javascriptExecutor = (JavascriptExecutor) driver;
-		element = driver.findElement(By.xpath(locator));
-		String originalStyle = element.getAttribute("Style");
-		javascriptExecutor.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])", element, "style",
-				"border:3px solid red; border-style: dashed;");
-		try {
-			Thread.sleep(Constants.HIGHLIGHT_ELEMENT_TIMEOUT_FOR_DEMO);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		javascriptExecutor.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])", element, "style",
-				originalStyle);
+//		javascriptExecutor = (JavascriptExecutor) driver;
+//		element = driver.findElement(By.xpath(locator));
+//		String originalStyle = element.getAttribute("Style");
+//		javascriptExecutor.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])", element, "style",
+//				"border:3px solid red; border-style: dashed;");
+//		try {
+//			Thread.sleep(Constants.HIGHLIGHT_ELEMENT_TIMEOUT_FOR_DEMO);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		javascriptExecutor.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])", element, "style",
+//				originalStyle);
 
 	}
 
@@ -541,10 +551,28 @@ public class AbstractPage {
 		}
 	}
 
+	public void waitForElementVisible(WebDriver driver, WebElement element) {
+		waitExplicit = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
+		try {
+			waitExplicit.until(ExpectedConditions.visibilityOf(element));
+		} catch (Exception ex) {
+			Reporter.log(
+					"================================== Wait for element not visible===================================");
+			Reporter.log(ex.getMessage());
+			System.err.println(
+					"================================== Wait for element not visible===================================");
+			System.err.println(ex.getMessage() + "\n");
+		}
+	}
+
 	public void waitForElementClickable(WebDriver driver, String locator) {
 		waitExplicit = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
 		byLocator = By.xpath(locator);
 		waitExplicit.until(ExpectedConditions.elementToBeClickable(byLocator));
+	}
+	public void waitForElementClickable(WebDriver driver, WebElement element) {
+		waitExplicit = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
+		waitExplicit.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
 	public void waitForElementClickable(WebDriver driver, String locator, String... values) {

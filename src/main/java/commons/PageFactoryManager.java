@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 
 import pagesObject.DashboardPageObject;
 import pagesObject.LoginPageObject;
+import pagesObject.PDFPageObject;
 
 public class PageFactoryManager {
 	public static LoginPageObject getLoginPage(WebDriver driver) {
@@ -12,5 +13,9 @@ public class PageFactoryManager {
 
 	public static DashboardPageObject getDashboardPage(WebDriver driver) {
 		return new DashboardPageObject(driver);
+	}
+
+	public static PDFPageObject getPdfPage(WebDriver driver) {
+		return new PDFPageObject(driver);
 	}
 }
