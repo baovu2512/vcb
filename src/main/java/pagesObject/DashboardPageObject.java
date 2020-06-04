@@ -1,35 +1,35 @@
 package pagesObject;
 
-import org.openqa.selenium.WebDriver;
-
 import PageUIs.DashboardPageUI;
 import commons.AbstractPage;
+import org.openqa.selenium.WebDriver;
 
 public class DashboardPageObject extends AbstractPage {
-	WebDriver driver;
 
-	public DashboardPageObject(WebDriver driver) {
-		this.driver = driver;
-	}
+  WebDriver driver;
 
-	public boolean isDashboardPageDisplayed() {
-		waitForElementVisible(driver, DashboardPageUI.CHART_MENU_HEADER);
-		return isControlDisplayed(driver, DashboardPageUI.CHART_MENU_HEADER);
-	}
+  public DashboardPageObject(WebDriver driver) {
+    this.driver = driver;
+  }
 
-	public void inputDatePicker(String sDate) {
-		waitForElementVisible(driver, DashboardPageUI.DATE_PICKER_INPUT);
-		sendKeyToElement(driver, DashboardPageUI.DATE_PICKER_INPUT, sDate);
-	}
+  public boolean isDashboardPageDisplayed() {
+    waitForElementVisible(driver, DashboardPageUI.CHART_MENU_HEADER);
+    return isControlDisplayed(driver, DashboardPageUI.CHART_MENU_HEADER);
+  }
 
-	public void clickQueryButton() {
-		waitForElementVisible(driver, DashboardPageUI.QUERY_BUTTON);
-		clickToElement(driver, DashboardPageUI.QUERY_BUTTON);
-		waitForElementInvisible(driver, DashboardPageUI.SPINNER_LOADING);
-	}
+  public void inputDatePicker(String sDate) {
+    waitForElementVisible(driver, DashboardPageUI.DATE_PICKER_INPUT);
+    sendKeyToElement(driver, DashboardPageUI.DATE_PICKER_INPUT, sDate);
+  }
 
-	public void clickPDFMenu(){
-		waitForElementVisible(driver, DashboardPageUI.PDF_MENU);
-		clickToElement(driver, DashboardPageUI.PDF_MENU);
-	}
+  public void clickQueryButton() {
+    waitForElementVisible(driver, DashboardPageUI.QUERY_BUTTON);
+    clickToElement(driver, DashboardPageUI.QUERY_BUTTON);
+    waitForElementInvisible(driver, DashboardPageUI.SPINNER_LOADING);
+  }
+
+  public void clickPDFMenu() {
+    waitForElementVisible(driver, DashboardPageUI.PDF_MENU);
+    clickToElement(driver, DashboardPageUI.PDF_MENU);
+  }
 }

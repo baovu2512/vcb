@@ -1,11 +1,14 @@
 package commons;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import org.testng.IReporter;
 import org.testng.IResultMap;
 import org.testng.ISuite;
@@ -15,60 +18,58 @@ import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.xml.XmlSuite;
 
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
-import com.relevantcodes.extentreports.LogStatus;
-
 public class ExtentReportListener implements IReporter {
-	private ExtentReports extent;
-	private ExtentTest test;
 
-	public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
-		extent = new ExtentReports(outputDirectory + File.separator + "ExtentReportResults.html", true);
-		for (ISuite suite : suites) {
-			Map<String, ISuiteResult> result = suite.getResults();
+  private ExtentHtmlReporter extent;
+  private ExtentTest test;
 
-			for (ISuiteResult r : result.values()) {
-				ITestContext context = r.getTestContext();
-				buildTestNodes(context.getPassedTests(), LogStatus.PASS);
-				buildTestNodes(context.getFailedTests(), LogStatus.FAIL);
-				buildTestNodes(context.getSkippedTests(), LogStatus.SKIP);
-			}
-		}
-		extent.flush();
-		extent.close();
-	}
+  public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites,
+      String outputDirectory) {
+    extent = new ExtentHtmlReporter(outputDirectory + File.separator + "ExtentReportResults.html");
+    for (ISuite suite : suites) {
+      Map<String, ISuiteResult> result = suite.getResults();
 
-	private void buildTestNodes(IResultMap tests, LogStatus status) {
-		if (tests.size() > 0) {
-			for (ITestResult result : tests.getAllResults()) {
-				test = extent.startTest(result.getMethod().getMethodName());
+      for (ISuiteResult r : result.values()) {
+        ITestContext context = r.getTestContext();
+        buildTestNodes(context.getPassedTests(), Status.PASS);
+        buildTestNodes(context.getFailedTests(), Status.FAIL);
+        buildTestNodes(context.getSkippedTests(), Status.SKIP);
+      }
+    }
+    extent.flush();
+  }
 
-				test.setStartedTime(getTime(result.getStartMillis()));
-				test.setEndedTime(getTime(result.getEndMillis()));
+  private void buildTestNodes(IResultMap tests, Status status) {
+    if (tests.size() > 0) {
+      for (ITestResult result : tests.getAllResults()) {
+        test = extent.(result.getMethod().getMethodName());
 
-				for (String group : result.getMethod().getGroups())
-					test.assignCategory(group);
+        test.(getTime(result.getStartMillis()));
+        test.setEndedTime(getTime(result.getEndMillis()));
 
-				if (result.getThrowable() != null) {
-					test.log(status, result.getThrowable());
-				} else {
-					test.log(status, "Test " + status.toString().toLowerCase() + "ed");
-				}
+        for (String group : result.getMethod().getGroups()) {
+          test.assignCategory(group);
+        }
 
-				extent.endTest(test);
-			}
-		}
-	}
+        if (result.getThrowable() != null) {
+          test.log(status, result.getThrowable());
+        } else {
+          test.log(status, "Test " + status.toString().toLowerCase() + "ed");
+        }
 
-	private Date getTime(long millis) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(millis);
-		return calendar.getTime();
-	}
+        extent.endTest(test);
+      }
+    }
+  }
 
-	public void extendLog(String message) {
-		test.log(LogStatus.INFO, message);
-		Reporter.log(message);
-	}
+  private Date getTime(long millis) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTimeInMillis(millis);
+    return calendar.getTime();
+  }
+
+  public void extendLog(String message) {
+    test.log(LogStatus.INFO, message);
+    Reporter.log(message);
+  }
 }
