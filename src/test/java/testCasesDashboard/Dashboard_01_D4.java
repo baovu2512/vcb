@@ -10,7 +10,6 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pagesObject.DashboardPageObject;
 import pagesObject.LoginPageObject;
-import reportConfig.ExtentTestManager;
 
 public class Dashboard_01_D4 extends AbstractTest {
 
@@ -46,7 +45,7 @@ public class Dashboard_01_D4 extends AbstractTest {
   @Test
   public void Verify_Dashboard(Method method) {
     verifyTrue(true);
-    ExtentTestManager.startTest(method.getName(), method.getName());
+//    ExtentTestManager.startTest(method.getName(), method.getName());
     log.info("PaymentPrecondition: Step 01 - Click to PDF Menu side-bar");
     dashboardPage.clickPDFMenu();
 

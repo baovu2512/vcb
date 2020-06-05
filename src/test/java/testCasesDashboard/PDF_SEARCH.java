@@ -13,7 +13,6 @@ import org.testng.annotations.Test;
 import pagesObject.DashboardPageObject;
 import pagesObject.LoginPageObject;
 import pagesObject.PDFPageObject;
-import reportConfig.ExtentTestManager;
 
 public class PDF_SEARCH extends AbstractTest {
 
@@ -51,7 +50,7 @@ public class PDF_SEARCH extends AbstractTest {
   @Test
   public void Test_KyBaoCao(Method method) {
     verifyTrue(true);
-    ExtentTestManager.startTest(method.getName(), method.getName());
+//    ExtentTestManager.startTest(method.getName(), method.getName());
     log.info("Test_KyBaoCao: Step 01 - Click to PDF Menu side-bar");
     dashboardPage.clickPDFMenu();
     pdfPage = PageFactoryManager.getPdfPage(driver);

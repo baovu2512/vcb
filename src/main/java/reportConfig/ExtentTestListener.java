@@ -27,6 +27,7 @@ public class ExtentTestListener extends AbstractTest implements ITestListener {
   @Override
   public void onTestStart(ITestResult result) {
     System.out.println("---------- " + result.getName() + " STARTED test ----------");
+    ExtentTestManager.startTest(result.getMethod().getMethodName(),result.getMethod().getMethodName());
   }
 
   @Override

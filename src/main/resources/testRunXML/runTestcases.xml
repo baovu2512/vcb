@@ -2,16 +2,14 @@
 <suite name="Suite" parallel="false">
 
 	<listeners>
-		<listener class-name="org.uncommons.reportng.HTMLReporter" />
-		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
 		<listener class-name="reportConfig.ExtentTestListener" />
-		<listener class-name="retryTestFailed.RetryListener" />
+<!--		<listener class-name="retryTestFailed.RetryListener" />-->
 	</listeners>
-	<test name="Test BML on CHROME">
+	<test name="Demo test">
 		<parameter name="browser" value="chrome" />
 		<parameter name="url" value="vcbchart" />
 		<classes>
-			<class name="testCasesDashboard.PDF_SEARCH" />
+			<class name="testCasesDashboard.NewTest" />
 		</classes>
 	</test>
 </suite>
